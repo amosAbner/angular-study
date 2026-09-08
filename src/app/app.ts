@@ -1,9 +1,11 @@
 import { Component, signal } from '@angular/core';
-import { Calculator } from './calculator/calculator';
-import { Shopping } from "./shopping/shopping";
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { RouterOutlet, RouterLink } from '@angular/router';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
-  imports: [Shopping],
+  imports: [RouterOutlet, RouterLink, MatToolbarModule, MatIconModule, MatButtonModule],
   selector: 'app-root',
   styleUrl: './app.scss',
   templateUrl: './app.html',

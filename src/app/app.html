@@ -1,1 +1,13 @@
-<app-shopping></app-shopping>
+<mat-toolbar color="primary">
+    <span>Cadastro de Clientes</span>
+    <span class="spacer"></span>
+    <button matButton="filled" routerLink="/register">
+        <mat-icon fontIcon="feed"></mat-icon>
+        Formulário
+    </button>
+    <button matButton="filled" routerLink="/consult">
+        <mat-icon fontIcon="search"></mat-icon>
+        Consulta
+    </button>
+</mat-toolbar>
+<router-outlet></router-outlet>
