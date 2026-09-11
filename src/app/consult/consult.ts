@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatCardModule } from '@angular/material/card'
@@ -7,18 +7,22 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input'
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { CustomerService } from '../service/customers';
 import { Customer } from '../model/customer';
+import { Router } from '@angular/router';
+import { DeleteConfirmDialog } from './delete-confirm-dialog';
 
 @Component({
   imports: [
-    FlexLayoutModule, 
-    MatCardModule, 
-    FormsModule, 
+    FlexLayoutModule,
+    MatCardModule,
+    FormsModule,
     MatButtonModule,
     MatInputModule,
     MatIconModule,
     MatTableModule,
+    MatDialogModule,
     CommonModule
   ],
   selector: 'app-consult',
@@ -29,18 +33,51 @@ export class Consult implements OnInit {
 
   name: string = '';
   listCustomer: Customer[] = [];
-  columnsTable: string[] = ['id', 'name', 'document', 'birthday', 'email'];
+  columnsTable: string[] = ['id', 'name', 'document', 'birthday', 'email', 'actions'];
 
-  constructor(private customerService: CustomerService) {
-    this.listCustomer = this.customerService.listCustormer(this.name);
+  constructor(
+    private customerService: CustomerService,
+    private router: Router,
+    private dialog: MatDialog,
+    private cdr: ChangeDetectorRef
+  ) {
   }
 
   ngOnInit() {
+    this.refreshList();
+  }
+
+  refreshList() {
     this.listCustomer = this.customerService.listCustormer(this.name);
+    this.cdr.detectChanges();
   }
 
   search() {
-    this.listCustomer = this.customerService.listCustormer(this.name);
+    this.refreshList();
+  }
+
+  editCustomer(id: string) {
+    this.router.navigate(['/register', id]);
+  }
+
+  delete(id: string) {
+    const dialogRef = this.dialog.open(DeleteConfirmDialog, {
+      width: '420px',
+      disableClose: true,
+      panelClass: 'delete-confirm-dialog-panel'
+    });
+
+    dialogRef.afterClosed().subscribe((confirmed) => {
+      if (!confirmed) {
+        return;
+      }
+
+      const wasDeleted = this.customerService.delete(id);
+
+      if (wasDeleted) {
+        this.refreshList();
+      }
+    });
   }
 
 }

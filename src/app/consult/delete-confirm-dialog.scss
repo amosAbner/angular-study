@@ -1,0 +1,16 @@
+::ng-deep .mat-dialog-container {
+  border-radius: 16px;
+  padding: 24px;
+}
+
+h2 {
+  margin: 0 0 12px;
+}
+
+mat-dialog-content {
+  min-width: 320px;
+}
+
+mat-dialog-actions {
+  gap: 8px;
+}

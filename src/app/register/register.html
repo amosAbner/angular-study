@@ -38,11 +38,12 @@
                         <div fxLayout="column" fxFlex="400px">
                             <mat-form-field class="full-width">
                                 <mat-label>CPF: *</mat-label>
-                                <input  type="email"
+                                <input  type="text"
                                         placeholder="Digite seu CPF"
                                         [(ngModel)]="customer.document"
                                         name="cpf"
-                                        matInput>
+                                        matInput
+                                        mask="000.000.000-00">
                             </mat-form-field>
                         </div>
                     </div>
@@ -51,21 +52,29 @@
                         <div fxLayout="column" fxFlex="400px">
                             <mat-form-field class="full-width">
                                 <mat-label>Data Nascimento: *</mat-label>
-                                <input  type="email"
+                                <input  type="text"
                                         placeholder="dd/MM/yyyy"
                                         [(ngModel)]="customer.birthday"
                                         name="dataNascimento"
-                                        matInput>
+                                        matInput
+                                        mask="00/00/0000">
                             </mat-form-field>
                         </div>
                     </div>
                 </mat-card-content>
 
                 <mat-card-actions>
-                    <button mat-flat-button type="submit" (click)="save()">
-                        <mat-icon fontIcon="save"></mat-icon>
-                        Salvar
-                    </button>
+                    @if (!isUpdate) {
+                        <button mat-flat-button type="submit" (click)="save()">
+                            <mat-icon fontIcon="save"></mat-icon>
+                            Salvar
+                        </button>
+                    } @else {
+                        <button mat-flat-button type="submit" (click)="update()">
+                            <mat-icon fontIcon="refresh"></mat-icon>
+                            Atualizar
+                        </button>
+                    }
                     <button mat-flat-button class="ml-5 clear-button" type="button" (click)="clear()">
                         <mat-icon fontIcon="delete"></mat-icon>
                         Limpar

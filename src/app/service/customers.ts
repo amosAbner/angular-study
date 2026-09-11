@@ -13,6 +13,21 @@ export class CustomerService {
         localStorage.setItem(CustomerService.REPO_CUSTOMERS, JSON.stringify(customers));
     }
 
+    update(customer: Customer) {
+        const customers = this.obterStorage();
+        const index = customers.findIndex(c => c.id === customer.id);
+
+        if (index !== -1) {
+            customers[index] = customer;
+            localStorage.setItem(CustomerService.REPO_CUSTOMERS, JSON.stringify(customers));
+        }
+    }
+
+    findCustomerById(id: string): Customer | undefined {
+        const customers = this.obterStorage();
+        return customers.find(c => c.id === id);
+    }
+
     listCustormer(name: string): Customer[] {
         const customers = this.obterStorage();
         
@@ -22,6 +37,23 @@ export class CustomerService {
 
         return customers.filter(customer => 
             customer.name?.toLowerCase().includes(name.toLowerCase()));
+    }
+
+    delete(id: string | undefined): boolean {
+        if (!id) {
+            return false;
+        }
+
+        const customers = this.obterStorage();
+        const index = customers.findIndex(c => c.id === id);
+
+        if (index === -1) {
+            return false;
+        }
+
+        customers.splice(index, 1);
+        localStorage.setItem(CustomerService.REPO_CUSTOMERS, JSON.stringify(customers));
+        return true;
     }
 
     private obterStorage(): Customer[] {

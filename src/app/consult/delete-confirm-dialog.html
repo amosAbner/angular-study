@@ -1,0 +1,14 @@
+<h2 mat-dialog-title>Excluir cliente</h2>
+<mat-dialog-content>
+  <p>Deseja realmente excluir este cliente?</p>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button (click)="cancel()">
+    <mat-icon fontIcon="close"></mat-icon>
+    Cancelar
+  </button>
+  <button mat-flat-button color="warn" (click)="confirm()">
+    <mat-icon fontIcon="delete"></mat-icon>
+    Excluir
+  </button>
+</mat-dialog-actions>
